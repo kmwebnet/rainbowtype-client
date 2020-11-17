@@ -1,0 +1,9 @@
+{
+  "ou": "testpj",
+  "device": "template/testpj/testpj-tmpl.crt",
+  "signer": "certs/testpjsigner.crt",
+  "signerkey": "keys/testpjsigner.crt.key",
+  "rootkey": "template/testpj/testproject.crt.key",
+  "signkey": "template/testpj/testpj-codesign.key",
+  "version": 2
+}

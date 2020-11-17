@@ -1,0 +1,25 @@
+{
+  "name": "rainbowtypeclient",
+  "productName": "rainbowtypeclient",
+  "version": "1.0.0",
+  "description": "rainbowtype IoT secure provisioning client",
+  "main": "./main.prod.js",
+  "author": {
+    "name": "Kentaro Mitsuyasu",
+    "email": "kmwebnet@gmail.com",
+    "url": "https://github.com/kmwebnet"
+  },
+  "scripts": {
+    "electron-rebuild": "node -r ../internals/scripts/BabelRegister.js ../internals/scripts/ElectronRebuild.js",
+    "postinstall": "yarn electron-rebuild"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@types/pkijs": "^0.0.6",
+    "@types/websocket": "^1.0.1",
+    "axios": "^0.20.0",
+    "pkijs": "^2.1.90",
+    "python-shell": "^2.0.2",
+    "websocket": "^1.0.32"
+  }
+}

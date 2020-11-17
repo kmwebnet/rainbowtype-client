@@ -1,0 +1,11 @@
+{
+  "HOME": "/",
+  "DEVICE": "/device",
+  "RTSERVER": "/rtserver",
+  "RTCLIENT": "/rtclient",
+  "CERTIFICATE": "/certificate",
+  "CLOUDCONNECT": "/cloudconn",
+  "CERTTEMPLATE": "/template",
+  "PROVISION": "/provision",
+  "DEPLOY": "/deploy"
+}
