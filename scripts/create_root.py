@@ -52,13 +52,13 @@ def load_or_create_key(filename, verbose=True, backend=None):
 
 def create_root(o, cn, root_file, root_key_file):
     crypto_be = cryptography.hazmat.backends.default_backend()
-    
+
     # Create or load a root CA key pair
-    print('\nRoot CA key')
+    #print('\nRoot CA key')
     root_ca_priv_key = load_or_create_key(root_key_file, backend=crypto_be)
 
     # Create root CA certificate
-    print('\nGenerating self-signed root CA certificate')
+    #print('\nGenerating self-signed root CA certificate')
     builder = x509.CertificateBuilder()
     builder = builder.serial_number(random_cert_sn(16))
     # Please note that the name of the root CA is also part of the signer certificate and thus, it's
@@ -88,9 +88,10 @@ def create_root(o, cn, root_file, root_key_file):
 
     # Write root CA certificate to file
     with open(root_file, 'wb') as f:
-        print('    Saving to ' + f.name)
+        #print('    Saving to ' + f.name)
         f.write(root_ca_cert.public_bytes(encoding=serialization.Encoding.PEM))
-    
+        print('CAcert create success')
+
 
 if __name__ == '__main__':
     # Create argument parser to document script use
@@ -101,5 +102,5 @@ if __name__ == '__main__':
     parser.add_argument('--key', default='root-ca.key', help='Private Key file of the root')
     args = parser.parse_args()
 
-    create_root(args.o, args.cn, args.cert, args.key)    
-    print('\nDone')
+    create_root(args.o, args.cn, args.cert, args.key)
+    #print('\nDone')

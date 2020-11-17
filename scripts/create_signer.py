@@ -12,29 +12,29 @@ from create_root import load_or_create_key, random_cert_sn
 def create_signer(o, cn, signer_file, signer_key_file, root_file, root_key_file):
     crypto_be = cryptography.hazmat.backends.default_backend()
 
-    print('\nLoading root CA key')
+    #print('\nLoading root CA key')
     if not os.path.isfile(root_key_file):
         raise AWSZTKitError('Failed to find root CA key file, ' + root_key_file + '. Have you run ca_create_root first?')
     with open(root_key_file, 'rb') as f:
-        print('    Loading from ' + f.name)
+        #print('    Loading from ' + f.name)
         root_ca_priv_key = serialization.load_pem_private_key(
             data=f.read(),
             password=None,
             backend=crypto_be)
 
-    print('\nLoading root CA certificate')
+    #print('\nLoading root CA certificate')
     if not os.path.isfile(root_file):
         raise AWSZTKitError('Failed to find root CA certificate file, ' + root_file + '. Have you run ca_create_root first?')
     with open(root_file, 'rb') as f:
-        print('    Loading from ' + f.name)
+        #print('    Loading from ' + f.name)
         root_ca_cert = x509.load_pem_x509_certificate(f.read(), crypto_be)
 
     # Create or load a Signer CA key pair
-    print('\nSigner CA key')
+    #print('\nSigner CA key')
     signer_ca_priv_key = load_or_create_key(signer_key_file, backend=crypto_be)
 
     # Create signer CA certificate
-    print('\nGenerating signer CA certificate from CSR')
+    #print('\nGenerating signer CA certificate from CSR')
     # Please note that the structure of the signer certificate is part of certificate definition in the SAMG55 firmware
     # (g_cert_elements_1_signer). If any part of it is changed, it will also need to be changed in the firmware.
     # The cert2certdef.py utility script can help with regenerating the cert_def_1_signer.c file after making changes.
@@ -84,8 +84,9 @@ def create_signer(o, cn, signer_file, signer_key_file, root_file, root_key_file)
 
     # Write signer CA certificate to file
     with open(signer_file, 'wb') as f:
-        print('    Saving to ' + f.name)
+        #print('    Saving to ' + f.name)
         f.write(signer_ca_cert.public_bytes(encoding=serialization.Encoding.PEM))
+        print('CAcert create success')
 
 
 if __name__ == '__main__':
@@ -101,4 +102,4 @@ if __name__ == '__main__':
 
     create_signer(args.o, args.cn, args.cert, args.key, args.root, args.rootkey)
 
-    print('\nDone')
+    #print('\nDone')

@@ -61,14 +61,27 @@ function Certcreator1({ onClose, open }: Props) {
         ],
       };
 
-      PythonShell.run(
+      const pyshell = new PythonShell(
         join('scripts/', 'create_root.py'),
-        options,
-        (err, results) => {
-          if (err) throw err;
-          console.log(results);
-        }
+        options
       );
+      pyshell.on('message', (message) => {
+        console.log(message);
+
+        if (message === 'CAcert create success') {
+          pyshell.end((err, code, signal) => {
+            if (err) throw err;
+            console.log(`The exit code was: ${code}`);
+            console.log(`The exit signal was: ${signal}`);
+            console.log('finished');
+          });
+
+          const window = remote.BrowserWindow.getFocusedWindow();
+          if (window !== null) {
+            window.reload();
+          }
+        }
+      });
     } else {
       const options: Options = {
         mode: 'text',
@@ -89,24 +102,29 @@ function Certcreator1({ onClose, open }: Props) {
         ],
       };
 
-      PythonShell.run(
+      const pyshell = new PythonShell(
         join('scripts/', 'create_signer.py'),
-        options,
-        (err, results) => {
-          if (err) throw err;
-          console.log(results);
-        }
+        options
       );
+      pyshell.on('message', (message) => {
+        console.log(message);
+
+        if (message === 'CAcert create success') {
+          pyshell.end((err, code, signal) => {
+            if (err) throw err;
+            console.log(`The exit code was: ${code}`);
+            console.log(`The exit signal was: ${signal}`);
+            console.log('finished');
+          });
+
+          const window = remote.BrowserWindow.getFocusedWindow();
+          if (window !== null) {
+            window.reload();
+          }
+        }
+      });
     }
-
-    setTimeout(() => {
-      onClose();
-
-      const window = remote.BrowserWindow.getFocusedWindow();
-      if (window !== null) {
-        window.reload();
-      }
-    }, 200);
+    onClose();
   };
 
   const listkey = () => {
