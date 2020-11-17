@@ -1,4 +1,66 @@
-<img src="internals/img/erb-banner.png" width="100%" />
+## rainbowtype secure IoT prototype development client
+
+## Environment
+
+Windows10 20H2 (19042.630) PC
+
+## Install
+
+Download Visual studio Installer and install.
+https://visualstudio.microsoft.com/ja/thank-you-downloading-visual-studio/?sku=BuildTools
+
+In Visual Studio Installer, install Visual Studio Build Tools 2017(15.9.29)
+
+Download Python 2.7.18 and install it at c:\Python27.
+https://www.python.org/ftp/python/2.7.18/python-2.7.18.amd64.msi
+
+Download Python 3.8.6 and install it at c:\Python38.
+https://www.python.org/ftp/python/3.8.6/python-3.8.6-amd64.exe
+
+Download nodejs 14.15.1 and install.
+https://nodejs.org/dist/v14.15.1/node-v14.15.1-x64.msi
+
+run cmd.exe as an administrator role and execute:
+
+```bash
+yarn global add windows-build-tools
+```
+
+clone the repo via git and install dependencies:
+
+```
+git clone --depth 1 --single-branch https://github.com/kmwebnet/rainbowtype-client.git
+cd rainbowtype-client
+yarn
+c:\Python38\python.exe -m pip install -r requirements.txt
+
+```
+
+## Packaging for Production
+
+To package apps for the local platform:
+
+```bash
+yarn package
+```
+
+Please make sure if you transfer this app to the other PC, you also setup python environment as follows:
+
+Download Python 3.8.6 and install it at c:\Python38.
+https://www.python.org/ftp/python/3.8.6/python-3.8.6-amd64.exe
+
+install python dependencies
+
+```
+c:\Python38\python.exe -m pip install -r requirements.txt
+```
+
+<p>
+  This project was created using the Electron-react-boilerplate.
+  Therefore, users are free to customize, publish and use the app.
+</p>
+
+<a href="https://github.com/electron-react-boilerplate/electron-react-boilerplate"><img src="internals/img/erb-banner.png" width="100%" /></a>
 
 <br>
 
@@ -21,47 +83,12 @@
 <hr />
 <br />
 
-<div align="center">
-
-[![Build Status][github-actions-status]][github-actions-url]
-[![Dependency Status][david-image]][david-url]
-[![DevDependency Status][david-dev-image]][david-dev-url]
-[![Github Tag][github-tag-image]][github-tag-url]
-
-[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/electron-react-blpt)
-[![OpenCollective](https://opencollective.com/electron-react-boilerplate/backers/badge.svg)](#backers)
-[![OpenCollective](https://opencollective.com/electron-react-boilerplate/sponsors/badge.svg)](#sponsors)
-[![Good first issues open][good-first-issue-image]][good-first-issue-url]
-[![StackOverflow][stackoverflow-img]][stackoverflow-url]
-
-</div>
-
-## Install
-
-- **If you have installation or compilation issues with this project, please see [our debugging guide](https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/400)**
-
-First, clone the repo via git and install dependencies:
-
-```bash
-git clone --depth 1 --single-branch https://github.com/electron-react-boilerplate/electron-react-boilerplate.git your-project-name
-cd your-project-name
-yarn
-```
-
 ## Starting Development
 
 Start the app in the `dev` environment. This starts the renderer process in [**hot-module-replacement**](https://webpack.js.org/guides/hmr-react/) mode and starts a webpack dev server that sends hot updates to the renderer process:
 
 ```bash
 yarn dev
-```
-
-## Packaging for Production
-
-To package apps for the local platform:
-
-```bash
-yarn package
 ```
 
 ## Docs
