@@ -4,12 +4,15 @@ import argparse
 import pytz
 
 import datetime
+from datetime import timedelta
 import cryptography
 from cryptography import x509
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives import serialization
 from create_root import load_or_create_key
 import ipaddress
+
+expire_day = timedelta(824, 0, 0)
 
 def cert_sn(size, builder):
     """Cert serial number is the SHA256(Subject public key + Encoded dates)"""
@@ -81,8 +84,10 @@ def create_server(o, cn, san1, san2, server_file, server_key_file, signer_file, 
     # Device cert must have minutes and seconds set to 0
     builder = builder.not_valid_before(datetime.datetime.now(tz=pytz.utc).replace(minute=0,second=0))
 
-    # Should be year 9999, but this doesn't work on windows
-    builder = builder.not_valid_after(datetime.datetime(3000, 12, 31, 23, 59, 59))
+    # TLS server certificates must have a validity period of 825 days or fewer
+    # (as expressed in the NotBefore and NotAfter fields of the certificate).
+    # https://support.apple.com/en-us/HT210176
+    builder = builder.not_valid_after(datetime.datetime.now(tz=pytz.utc).replace(minute=0,second=0) + expire_day)
 
     builder = builder.subject_name(x509.Name([
         x509.NameAttribute(x509.oid.NameOID.ORGANIZATION_NAME, o),
