@@ -29,12 +29,8 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { PythonShell, Options } from 'python-shell';
-import * as Cert from 'pkijs/src/Certificate';
-import { fromBER } from 'asn1js';
 
 const pypath = 'c:/Python38/python';
-
-const X509_OU_KEY = '2.5.4.10';
 
 // This element is only used by signing device cert
 
@@ -47,16 +43,15 @@ type Props = {
 
 function Devicecontrollersub1({ serial, data, setdata, setreq }: Props) {
   const [key, setkey] = useState<string>('');
-  const [keylist, setkeylist] = useState<string[]>([]);
+  const [tmplist, settmplist] = useState<string[]>([]);
 
   const listkey = () => {
-    const cpath = 'certs/';
-    const cards: string[] = [];
-    fs.readdirSync(cpath, { withFileTypes: true })
+    const tpath = 'template/';
+    const tcards: string[] = [];
+    fs.readdirSync(tpath, { withFileTypes: true })
       .filter((files) => files.isFile())
-      .forEach((file) => cards.push(file.name));
-
-    setkeylist(cards);
+      .forEach((file) => tcards.push(file.name));
+    settmplist(tcards);
   };
 
   useEffect(() => {
@@ -64,41 +59,12 @@ function Devicecontrollersub1({ serial, data, setdata, setreq }: Props) {
     console.log('---init---');
   }, []);
 
-  const getoufromcert = (cards: string) => {
-    const cpath = 'certs/';
-    let ou = '';
-
-    const certpem = fs.readFileSync(join(cpath, cards), 'utf8');
-    const b64 = certpem.replace(
-      /(-----(BEGIN|END) CERTIFICATE-----|[\n\r])/g,
-      ''
-    );
-    const der = Buffer.from(b64, 'base64');
-    const ber = new Uint8Array(der).buffer;
-    const asn1 = fromBER(ber);
-
-    // eslint-disable-next-line new-cap
-    const certder = new Cert.default({ schema: asn1.result });
-
-    const subjectAttributes = certder.subject.typesAndValues;
-    for (let index = 0; index < subjectAttributes.length; index += 1) {
-      const attribute = subjectAttributes[index];
-      if (attribute.type.toString() === X509_OU_KEY) {
-        ou = attribute.value.valueBlock.value;
-        break;
-      }
-    }
-
-    setkey(cards);
-    return ou;
-  };
-
   const keyChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    let ou = '';
-    ou = getoufromcert(event.target.value as string);
-
-    const cpath = 'certs/';
-    const kpath = 'keys/';
+    setkey(event.target.value as string);
+    const tpath = 'template/';
+    const tmpldata = JSON.parse(
+      fs.readFileSync(join(tpath, event.target.value as string), 'utf8')
+    );
 
     const options: Options = {
       mode: 'text',
@@ -107,11 +73,11 @@ function Devicecontrollersub1({ serial, data, setdata, setreq }: Props) {
         '--devicekey',
         data,
         '--signer',
-        (cpath + event.target.value) as string,
+        tmpldata.signer,
         '--signerkey',
-        `${(kpath + event.target.value) as string}.key`,
+        tmpldata.signerkey,
         '--o',
-        ou,
+        tmpldata.ou,
         '--cn',
         serial,
       ],
@@ -150,7 +116,7 @@ function Devicecontrollersub1({ serial, data, setdata, setreq }: Props) {
           value={key}
           onChange={keyChange}
         >
-          {keylist.map((cards) => (
+          {tmplist.map((cards) => (
             <MenuItem key={cards} value={cards}>
               {cards}
             </MenuItem>
@@ -158,9 +124,10 @@ function Devicecontrollersub1({ serial, data, setdata, setreq }: Props) {
         </Select>
         // eslint-disable-next-line prettier/prettier
       )}
-      label="This device has issued public key. Choose keypair to sign"
+      label="This device has issued public key. Choose template to sign"
     />
   );
 }
 
 export default Devicecontrollersub1;
+
