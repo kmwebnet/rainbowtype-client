@@ -182,9 +182,9 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 
 ## License
 
-MIT © [Electron React Boilerplate](https://github.com/electron-react-boilerplate)
+MIT © [Electron React Boilerplate](https://github.com/electron-react-boilerplate)  
 Contains multiple license types.  
-please check [fossology report](https://github.com/kmwebnet/rainbowtype-client/raw/master/rainbowtype-client_clearing_report_Wed_Nov_25_11_2020_06_10_59.docx)  included this repo.
+please check [fossology report](https://github.com/kmwebnet/rainbowtype-client/raw/master/rainbowtype-client_clearing_report_Wed_Nov_25_11_2020_06_10_59.docx)  included this repo.   
 
 
 [github-actions-status]: https://github.com/electron-react-boilerplate/electron-react-boilerplate/workflows/Test/badge.svg
