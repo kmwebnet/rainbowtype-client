@@ -117,7 +117,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/electron-react-boilerplate/electron-react-boilerplate.git"
+    "url": "git+https://github.com/kmwebnet/rainbowtype-client.git"
   },
   "author": {
     "name": "Kentaro Mitsuyasu",
