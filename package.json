@@ -110,8 +110,8 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate",
+      "owner": "kmwebnet",
+      "repo": "rainbowtype-client",
       "private": false
     }
   },
@@ -157,7 +157,7 @@
     "hot",
     "reload"
   ],
-  "homepage": "https://github.com/electron-react-boilerplate/electron-react-boilerplate#readme",
+  "homepage": "https://github.com/kmwebnet/rainbowtype-client",
   "jest": {
     "testURL": "http://localhost/",
     "moduleNameMapper": {
