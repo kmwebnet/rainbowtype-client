@@ -207,7 +207,7 @@ function RtserverCertcreator({ onClose, open }: Props) {
           <TextField
             id="standard-basic"
             label="SAN1"
-            helperText="SAN1"
+            helperText="SAN1:domain name"
             value={san1 || ''}
             onChange={san1Change}
           />
@@ -215,7 +215,7 @@ function RtserverCertcreator({ onClose, open }: Props) {
           <TextField
             id="standard-basic"
             label="SAN2"
-            helperText="SAN2"
+            helperText="SAN2:IP Address(optional)"
             value={san2 || ''}
             onChange={san2Change}
           />
