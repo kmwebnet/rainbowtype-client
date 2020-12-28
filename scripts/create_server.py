@@ -142,16 +142,18 @@ def create_server(o, cn, san1, san2, server_file, server_key_file, signer_file, 
         x509.AuthorityKeyIdentifier.from_issuer_subject_key_identifier(issuer_ski.value),
         critical=False)
 
-    builder = builder.add_extension(
-        x509.SubjectAlternativeName(
-            [x509.DNSName(san1)]
-        ),
-        critical=False)
-    if (san2 != ''):
+    if (san2 == ''):
+        builder = builder.add_extension(
+            x509.SubjectAlternativeName([
+                x509.DNSName(san1)
+            ]),
+            critical=False)
+    else:
       builder = builder.add_extension(
-        x509.SubjectAlternativeName(
-            [x509.IPAddress(ipaddress.ip_address(san2))]
-        ),
+        x509.SubjectAlternativeName([
+            x509.DNSName(san1),
+            x509.IPAddress(ipaddress.ip_address(san2))
+        ]),
         critical=False)
 
     # Sign certificate
